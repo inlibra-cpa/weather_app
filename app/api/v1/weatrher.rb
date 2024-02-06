@@ -8,7 +8,7 @@ module V1
 
     before do
       def client
-        @client ||= ::AccueWeather::Client.new('weather app')
+        @client ||= ::AccueWeather::Client.new(name('weather app'))
       end
 
       def uniq_id
