@@ -10,7 +10,7 @@ module AccueWeather
     def uniq_id(city)
       generic_request.merge(
         q: city,
-        offset: 0,
+        offset: false,
         alias: false
       )
     end
@@ -19,7 +19,7 @@ module AccueWeather
 
     def generic_request
       {
-        apiKey: ENV.fetch('ACCUE_WEATHER_API_KEY'),
+        apikey: ENV.fetch('ACCUE_WEATHER_API_KEY'),
         language: 'en-us',
         details: false
       }
