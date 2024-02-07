@@ -8,7 +8,7 @@ module V1
 
     before do
       def client
-        @client ||= ::AccueWeather::Client.new(name('weather app'))
+        @client ||= ::AccueWeather::Client.new('weather app')
       end
 
       def uniq_id
@@ -19,9 +19,9 @@ module V1
     resource :weather do
       desc 'get current temperature'
       get '/current' do
-        result = client.current_temperature(uniq_id: uniq_id)
+        # result = client.current_temperature(uniq_id: uniq_id)
 
-        present '200'
+        # present '200'
       end
     end
   end

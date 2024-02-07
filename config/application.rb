@@ -9,10 +9,16 @@ require 'rails/all'
 Bundler.require(*Rails.groups)
 
 module WeatherApp
+  # Entry point for the WeatherApp Rails application. This class encapsulates the
+  # configuration and bootstrapping of the application. It inherits from
+  # Rails::Application, setting the framework's default configurations.
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
+    # Add `lib` to the autoload and eager load paths
+    config.autoload_paths << Rails.root.join('lib')
+    config.eager_load_paths << Rails.root.join('lib')
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.

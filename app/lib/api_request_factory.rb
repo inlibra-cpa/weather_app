@@ -6,7 +6,7 @@ module AccueWeather
   # required to interact with the various endpoints of the AccuWeather API. This class aims to
   # abstract the complexity of parameter creation and provide a simple interface for generating
   # requests specific to different API functionalities, such as fetching unique identifiers for cities.
-  class ApiRequestFactory
+  class APIRequestFactory
     def uniq_id(city)
       generic_request.merge(
         q: city,

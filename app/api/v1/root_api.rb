@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 require 'grape-swagger'
+
 module V1
   # This is the root API class.
-  class RootApi < Grape::API
+  class RootAPI < Grape::API
     format :json
     prefix :api
 
@@ -13,7 +14,7 @@ module V1
       end
     end
 
-    mount ::V1::Api
+    mount ::V1::API
 
     add_swagger_documentation \
       host: ENV.fetch('SWAGGER_HOST'),

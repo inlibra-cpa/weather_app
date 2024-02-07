@@ -4,12 +4,11 @@
 module AccueWeather
   # Base client for AccueWeather
   class Client
-
     Error = Class.new(StandardError)
 
     ACCUE_WEATHER_URI = 'dataservice.accuweather.com'
-    attr_accessor :name
 
+    attr_accessor :name
 
     def initialize(name)
       @name = name
@@ -17,8 +16,8 @@ module AccueWeather
 
     def uniq_id(city:)
       api_request(
-        url_with_path('locations/v1/cities/search'),
-        ::Accuweather::ApiRequestFactory
+        url_with_path('/locations/v1/cities/search'),
+        ::AccueWeather::APIRequestFactory
           .new
           .uniq_id(city)
           .to_query
@@ -30,17 +29,17 @@ module AccueWeather
     def api_request(url, params = {})
       response = http_get(url, params)
 
-      ::Accumweather::ApiResponse.new(response)
+      ::AccueWeather::APIResponse.new(response)
     end
 
-    def http_get
+    def http_get(url, params)
       http_request do
         HTTParty.get("#{url}?#{params}", request_params)
       end
     end
 
     def http_request(&block)
-      response = hendle_request_exception(&block)
+      response = handle_request_exception(&block)
 
       handle_response(response)
     end
@@ -75,9 +74,9 @@ module AccueWeather
       raise_error "AccueWeather response status code: #{response.code}, Message: #{response.body}"
     end
 
-    def url_with_path(new_path)
+    def url_with_path(new_path, *other_strings)
       new_uri = accue_weather_uri.dup
-      new_uri.path += [new_path].join('/').squeeze('/').(*other_strings '/')
+      new_uri.path += "/#{[new_path, *other_strings].join('/')}".squeeze('/')
       new_uri.to_s
     end
 
