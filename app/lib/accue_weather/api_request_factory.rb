@@ -15,12 +15,16 @@ module AccueWeather
       )
     end
 
+    def current_temperature
+      generic_request
+    end
+
     private
 
     def generic_request
       {
         apikey: ENV.fetch('ACCUE_WEATHER_API_KEY'),
-        language: 'en-us',
+        language: 'en',
         details: false
       }
     end
