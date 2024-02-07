@@ -14,7 +14,7 @@ module AccueWeather
     end
 
     def uniq_id
-      @uniq_id ||= get_nested_value(response, :Key)
+      @uniq_id ||= get_nested_value(response[:body], :Key)
     end
 
     def weather_text
@@ -23,6 +23,18 @@ module AccueWeather
 
     def temperature
       @temperature ||= get_nested_value(response, :Metric)
+    end
+
+    def temperature_24_hours
+      hash = {}
+
+      response[:body].each_with_index do |v, i|
+        key = Time.at(v['EpochTime']).to_datetime
+
+        hash[key] = v['Temperature']['Metric'] if hash[key].blank?
+
+        hash[key].merge(weather_text: weather_text)
+      end
     end
   end
 end

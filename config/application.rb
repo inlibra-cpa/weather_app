@@ -17,7 +17,7 @@ module WeatherApp
     config.load_defaults 7.1
 
     # Add `lib` to the autoload and eager load paths
-    config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('app', 'lib')
     config.eager_load_paths << Rails.root.join('lib')
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.

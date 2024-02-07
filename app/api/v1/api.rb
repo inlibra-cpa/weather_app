@@ -5,6 +5,6 @@ module V1
   class API < Grape::API
     version 'v1', using: :path
 
-    mount Weather
+    mount V1::Weather
   end
 end
