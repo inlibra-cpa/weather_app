@@ -1,67 +1,152 @@
-<h2 align="center">Weather App</h3>
-<br>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>
-        <%= button_to 'Current Temperature', '/api/v1/weather/current', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">2</th>
-      <td>
-        <%= button_to 'Daily temperature for the last 24 hours', '/api/v1/weather/historical', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">3</th>
-      <td>
-        <%= button_to 'Maximum temperature in 24 hours', '/api/v1/weather/historical/max', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">4</th>
-      <td>
-        <%= button_to 'Minimum temperature in 24 hours', '/api/v1/weather/historical/min', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">5</th>
-      <td>
-        <%= button_to 'Average temperature over 24 hours', '/api/v1/weather/historical/avg', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">6</th>
-      <td>
-        <%= button_to 'Backend status', '/api/v1/health', method: :get %>
-      </td>
-    </tr>
-    <tr>
-      <th scope="row">7</th>
-      <td>
-        <%= button_to 'Documentation', '/api/v1/docs', method: :get %>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Weather Forecast</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #eef1f5;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 720px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th {
+      background-color: #007bff;
+      color: #ffffff;
+      padding: 10px;
+      text-align: left;
+    }
+    td {
+      padding: 10px;
+      text-align: left;
+    }
+    .button_to {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .button_to:hover {
+      background-color: #218838;
+    }
+    form {
+      margin-top: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="submit"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Weather App</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Action</th>
+          <th scope="col">Select</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>
+            <%= button_to 'Current Temperature', '/api/v1/weather/current', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>
+            <%= button_to 'Daily temperature for the last 24 hours', '/api/v1/weather/historical', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>
+            <%= button_to 'Maximum temperature in 24 hours', '/api/v1/weather/historical/max', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>
+            <%= button_to 'Minimum temperature in 24 hours', '/api/v1/weather/historical/min', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>
+            <%= button_to 'Average temperature over 24 hours', '/api/v1/weather/historical/avg', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>
+            <%= button_to 'Backend status', '/api/v1/health', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>
+            <%= button_to 'Documentation', '/api/v1/docs', method: :get, class: 'button_to' %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
 
 <!-- Form to input city and fetch current weather -->
 <%= form_with url: '/api/v1/weather/current', method: :get do |form| %>
   <%= form.label :city, 'Input city:' %>
   <%= form.text_field :city %>
   <%= form.submit 'Get Current Weather' %>
-<% end %>
-
-<%= form_with url: '/api/v1/weather/historical/by_time', method: :get do |form| %>
-  <%= form.label :query, 'Input timestamp:' %>
-  <%= form.text_field :query %>
-  <%= form.submit 'Search' %>
 <% end %>

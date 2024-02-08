@@ -4,11 +4,11 @@
 module V1
   # Weather API
   class Weather < Grape::API
-    CITY = 'miami'
+    CITY = 'Myrtle Beach'
 
     before do
       def client
-        @client ||= ::AccueWeather::Client.new('hello ruby')
+        @client ||= ::AccueWeather::Client.new('Weather App')
       end
 
       def uniq_id
