@@ -53,6 +53,13 @@
   </tbody>
 </table>
 
+<!-- Form to input city and fetch current weather -->
+<%= form_with url: '/api/v1/weather/current', method: :get do |form| %>
+  <%= form.label :city, 'Input city:' %>
+  <%= form.text_field :city %>
+  <%= form.submit 'Get Current Weather' %>
+<% end %>
+
 <%= form_with url: '/api/v1/weather/historical/by_time', method: :get do |form| %>
   <%= form.label :query, 'Input timestamp:' %>
   <%= form.text_field :query %>

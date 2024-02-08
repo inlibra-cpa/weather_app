@@ -28,9 +28,9 @@ module AccueWeather
       api_request(
         url_with_path("/currentconditions/v1/#{uniq_id}"),
         ::AccueWeather::APIRequestFactory
-        .new
-        .current_temperature
-        .to_query
+          .new
+          .current_temperature
+          .to_query
       )
     end
 
@@ -74,19 +74,21 @@ module AccueWeather
       }
     end
 
+    # rubocop:disable Metrics/MethodLength
     def handle_request_exception
       yield
     rescue ::OpenSSL::SSL::SSLError
       raise_error 'AccueWeather returned invalid SSL data'
     rescue ::Net::OpenTimeout
-      raise_error 'AccueWeather connection time out'
+      raise_error 'AccueWeather connection timed out'
+    rescue ::SocketError
+      raise_error 'Received a SocketError while trying to connect to AccueWeather'
+    rescue ::Errno::ECONNREFUSED
+      raise_error 'Connection refused'
     rescue StandardError => e
-      raise_error "AccueWeather request failed due to: #{e.class}"
+      raise_error "AccueWeather request failed due to #{e.class}"
     end
-
-    def raise_error(message)
-      raise Client::Error, message
-    end
+    # rubocop:enable Metrics/MethodLength
 
     def handle_response(response)
       return { body: response.parsed_response, headers: response.headers } if response.code < 400
@@ -94,9 +96,13 @@ module AccueWeather
       raise_error "AccueWeather response status code: #{response.code}, Message: #{response.body}"
     end
 
-    def url_with_path(new_path, *other_strings)
+    def raise_error(message)
+      raise Client::Error, message
+    end
+
+    def url_with_path(new_path)
       new_uri = accue_weather_uri.dup
-      new_uri.path += "/#{[new_path, *other_strings].join('/')}".squeeze('/')
+      new_uri.path += [new_path].join('/').squeeze('/')
       new_uri.to_s
     end
 

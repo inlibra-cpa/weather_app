@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module AccueWeather
-  # This class encapsulates the response from an API call.
-  # It provides access to the response object and includes methods
-  # for retrieving a unique identifier from the response if available.
+  # Api response from AccueWeather
   class APIResponse
     include ApplicationHelper
 
@@ -14,27 +12,53 @@ module AccueWeather
     end
 
     def uniq_id
-      @uniq_id ||= get_nested_value(response[:body], :Key)
+      @uniq_id ||= get_nested_value(response, 'Key')
     end
 
     def weather_text
-      @weather_text ||= get_nested_value(response, :WeatherText)
+      @weather_text ||= get_nested_value(response, 'WeatherText')
     end
 
     def temperature
-      @temperature ||= get_nested_value(response, :Metric)
+      @temperature ||= get_nested_value(response, 'Metric')
     end
 
-    def temperature_24_hours
+    def temperature_24_hour
       hash = {}
 
-      response[:body].each_with_index do |v, i|
+      response[:body].each_with_index do |v, _|
         key = Time.at(v['EpochTime']).to_datetime
 
         hash[key] = v['Temperature']['Metric'] if hash[key].blank?
 
-        hash[key].merge(weather_text: weather_text)
+        hash[key].merge!(weather_text: weather_text)
       end
+
+      hash
+    end
+
+    def max_temp_in_24_hour
+      temperature_24_hour.values.map { |x| x['Value'] }.max
+    end
+
+    def min_temp_in_24_hour
+      temperature_24_hour.values.map { |x| x['Value'] }.min
+    end
+
+    def avg_temp_in_24_hour
+      array = []
+
+      temperature_24_hour.each_value do |x|
+        array << x['Value']
+      end
+
+      (array.instance_eval { reduce(:+) / size.to_f }).round(2)
+    end
+
+    def closet_temperature(all_temp, timestamp)
+      # AccueWeather support team doesn't have search support via timestamp
+
+      all_temp.key?(timestamp)
     end
   end
 end
