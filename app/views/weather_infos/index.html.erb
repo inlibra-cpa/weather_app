@@ -88,7 +88,7 @@
 </head>
 <body>
   <div class="container">
-    <h2>Weather App</h2>
+    <h2>Weather Forecast</h2>
     <table class="table">
       <thead>
         <tr>
@@ -143,7 +143,15 @@
     </table>
   </div>
 </body>
-
+<!-- Form to input address and fetch current weather -->
+    <%# <%= form_with url: '/api/v1/weather/current', method: :get, local: true do |form| %>
+      <%# <div class="form-group"> %>
+        <%# <%= form.label :address, 'Enter Address:' %>
+        <%# <%= form.text_field :address, required: true %>
+      <%# </div> %>
+      
+      <%# <%= form.submit 'Get Weather', class: "button_to" %>
+    <%# <% end %>
 <!-- Form to input city and fetch current weather -->
 <%= form_with url: '/api/v1/weather/current', method: :get do |form| %>
   <%= form.label :city, 'Input city:' %>

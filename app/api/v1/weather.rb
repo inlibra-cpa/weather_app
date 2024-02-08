@@ -14,9 +14,29 @@ module V1
       def uniq_id
         @uniq_id ||= client.uniq_id(city: CITY).uniq_id
       end
+
+      # def fetch_location_id(address)
+      #   Rails.cache.fetch(address, expires_in: 30.minutes) do
+      #     client.geocode_address(address: address).uniq_id
+      #   end
+      # end
     end
 
     resource :weather do # rubocop:disable Metrics/BlockLength
+      # desc 'Get current temperature for a given address'
+      # params do
+      #   requires :address, type: String, desc: "The address to retrieve weather for."
+      # end
+      # get '/current' do
+      #   address = permitted_params[:address]
+      #   location_id = fetch_location_id(address)
+
+      #   result = client.current_temperature(uniq_id: location_id)
+
+      #   present address: address, city: result.city, text: result.weather_text, temperature: result.temperature,
+      #           cached: result.cached
+      # end
+
       desc 'get current temperature'
       get '/current' do
         result = client.current_temperature(uniq_id: uniq_id)

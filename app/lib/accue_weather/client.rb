@@ -14,6 +14,16 @@ module AccueWeather
       @name = name
     end
 
+    # def geocode_address(address:)
+    #   api_request(
+    #     url_with_path('/locations/v1/cities/search'),
+    #     ::AccueWeather::APIRequestFactory
+    #       .new
+    #       .geocode(address)
+    #       .to_query
+    #   )
+    # end
+
     def uniq_id(city:)
       api_request(
         url_with_path('/locations/v1/cities/search'),

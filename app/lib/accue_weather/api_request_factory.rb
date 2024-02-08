@@ -13,6 +13,10 @@ module AccueWeather
       )
     end
 
+    # def geocode(address)
+    #   generic_request.merge(q: address)
+    # end
+
     def current_temperature
       generic_request
     end
